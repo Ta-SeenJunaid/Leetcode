@@ -32,4 +32,14 @@ class Solution(object):
         return sum
 
 
+root = TreeNode(6)
+root.left = TreeNode(7)
+root.right = TreeNode(8)
+root.left.left = TreeNode(9)
+root.right.left = TreeNode(10)
+root.right.right = TreeNode(6)
+root.right.right.left = TreeNode(2)
+root.right.right.right = TreeNode(2)
+
+print("Sum of left leaves is ", Solution().sumOfLeftLeaves(root))
 
