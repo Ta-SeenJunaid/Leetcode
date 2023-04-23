@@ -1,4 +1,6 @@
 # https://leetcode.com/problems/fruit-into-baskets/solutions/2960000/fruit-into-baskets/
+# https://www.youtube.com/watch?v=Lav6St0W_pQ&list=PL_z_8CaSLPWeM8BDJmIYDaoQ5zuwyxnfj&index=10
+# k = 2
 from typing import List, Counter
 
 # dict.get(key, default = None)
@@ -12,25 +14,38 @@ from typing import List, Counter
 # print(person['salary'])
 
 
+# class Solution:
+#     def totalFruit(self, fruits: List[int]) -> int:
+#         basket = {}
+#         left = 0
+#         max_picked = 0
+#         for right in range(len(fruits)):
+#             basket[fruits[right]] = basket.get(fruits[right], 0) + 1
+#
+#             while len(basket) > 2:
+#                 basket[fruits[left]] -= 1
+#                 if basket[fruits[left]] == 0:
+#                     del basket[fruits[left]]
+#                 # don't understand
+#                 left += 1
+#             max_picked = max(max_picked, right - left + 1)
+#         return max_picked
+
+
 class Solution:
     def totalFruit(self, fruits: List[int]) -> int:
         basket = {}
-        left = 0
-        max_picked = 0
-        for right in range(len(fruits)):
-            basket[fruits[right]] = basket.get(fruits[right], 0) + 1
-
+        l_p, max_picked = 0, 0
+        for r_p in range(len(fruits)):
+            basket[fruits[r_p]] = basket.get(fruits[r_p], 0) + 1
+            k = 2
             while len(basket) > 2:
-                basket[fruits[left]] -= 1
-                if basket[fruits[left]] == 0:
-                    del basket[fruits[left]]
-                # don't understand
-                left += 1
-            max_picked = max(max_picked, right - left + 1)
+                basket[fruits[l_p]] -= 1
+                if basket[fruits[l_p]] == 0:
+                    del basket[fruits[l_p]]
+                l_p += 1
+            max_picked = max(max_picked, r_p - l_p +1)
         return max_picked
-
-
-
 
 
 solution = Solution()
