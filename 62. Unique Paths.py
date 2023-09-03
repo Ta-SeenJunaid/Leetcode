@@ -11,9 +11,7 @@ class Solution:
 
         # As (m,n) & (n,m) belong to same result
         if m > n:
-            temp = m
-            m = n
-            n = temp
+            m, n = n, m
         key = str(m) + ',' + str(n)
         if key in self.memory:
             return self.memory[key]
