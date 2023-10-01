@@ -1,36 +1,35 @@
-class TreeNode(object):
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
-
-
-class Solution(object):
-    def preorderTraversal(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[int]
-        """
-        if root is None:
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        if not root:
             return []
-        return self.pre_order_traversal_helper(root, [])
+        return self.dfs_helper(root, [])
 
-    def pre_order_traversal_helper(self, root, res):
-        if root is None:
+    def dfs_helper(self, root: Optional[TreeNode], res) -> List[int]:
+        if not root:
             return
         res.append(root.val)
-        self.pre_order_traversal_helper(root.left, res)
-        self.pre_order_traversal_helper(root.right, res)
+        self.dfs_helper(root.left, res)
+        self.dfs_helper(root.right, res)
         return res
 
 
-root = TreeNode(6)
-root.left = TreeNode(7)
-root.right = TreeNode(8)
-root.left.left = TreeNode(9)
-root.right.left = TreeNode(10)
-root.right.right = TreeNode(6)
-root.right.right.left = TreeNode(2)
-root.right.right.right = TreeNode(2)
+class Solution:
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        if not root:
+            return []
+        stack, ans = [], []
+        stack.append(root)
+        while stack:
+            node = stack.pop()
+            if node:
+                ans.append(node.val)
+                stack.append(node.right)
+                stack.append(node.left)
+        return ans
 
-print("Pre-order Traversal: ", Solution().preorderTraversal(root))
