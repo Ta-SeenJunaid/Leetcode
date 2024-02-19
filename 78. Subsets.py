@@ -1,23 +1,15 @@
-# https://www.youtube.com/watch?v=REOH22Xwdkk
-from typing import List
-
-
 class Solution:
+    def __init__(self):
+        self.output = []
+
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        result = []
-        self.dfs_backtrack(0, [], result, nums)
-        return result
+        self.recur(0, [], nums)
+        return self.output
 
-    def dfs_backtrack(self, idx, sub_set: List, result: List, nums: List):
+    def recur(self, idx, cur, nums):
         if idx == len(nums):
-            result.append(sub_set.copy())
+            self.output.append(cur)
             return
-        sub_set.append(nums[idx])
-        self.dfs_backtrack(idx+1,  sub_set, result, nums)
-        sub_set.pop()
-        self.dfs_backtrack(idx+1, sub_set, result, nums)
-
-
-solution = Solution()
-print(solution.subsets(nums = [1,2,3]))
-print(solution.subsets(nums = [0]))
+        self.recur(idx+1, cur + [nums[idx]], nums)
+        self.recur(idx+1, cur, nums)
+        return
