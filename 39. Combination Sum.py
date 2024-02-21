@@ -3,7 +3,6 @@ class Solution:
         self.ans = []
 
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        candidates.sort()
         self.recur(0, target, [], candidates)
         return self.ans
 
