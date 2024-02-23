@@ -7,7 +7,8 @@ class Solution:
 
     def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
         candidates.sort()
-        return []
+        self.recur(0, target, [], candidates)
+        return self.res
 
     def recur(self, idx, target, path, candidates):
         if target == 0:
@@ -15,6 +16,7 @@ class Solution:
             return
         if target < 0 or idx >= len(candidates):
             return
-        for i in range(idx, len(candidates)):
-            self.recur(i+1, target-candidates[idx], path + [candidates[idx]], candidates)
-        while idx < len(candidates) and candidates[idx]
+        self.recur(idx+1, target-candidates[idx], path + [candidates[idx]], candidates)
+        while idx+1 < len(candidates) and candidates[idx] == candidates[idx+1]:
+            idx += 1
+        self.recur(idx+1, target, path, candidates)
