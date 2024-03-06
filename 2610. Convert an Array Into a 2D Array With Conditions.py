@@ -1,13 +1,14 @@
+# https://leetcode.com/problems/convert-an-array-into-a-2d-array-with-conditions/solutions/4489526/better-than-100-c-java-python-javascript-2-approaches-explained 
+
 class Solution:
     def findMatrix(self, nums: List[int]) -> List[List[int]]:
-        ans = [[nums[0]]]
-        for i in range(1, len(nums)):
-            new_row = True
-            for j in range(len(ans)):
-                if nums[i] not in ans[j]:
-                    ans[j].append(nums[i])
-                    new_row = False
-                    break
-            if new_row:
-                ans.append([nums[i]])
-        return ans  
+        freq = [0] * (len(nums)+1)
+        ans = []
+        print(freq)
+        for num in nums:
+            if freq[num] >= len(ans):
+                ans.append([])
+            ans[freq[num]].append(num)
+            freq[num] += 1
+        return ans
+       
