@@ -1,32 +1,21 @@
-# https://www.youtube.com/watch?v=vwzal4jbEfw
-from typing import List
-
+# https://leetcode.com/problems/count-subarrays-with-fixed-bounds/solutions/4949181/98-43-easy-solution-with-explanation
 
 class Solution:
-    def countSubarrays(self, nums: List[int], minK: int, maxK: int) -> int:
-        min_found = False
-        max_found = False
-        start = 0
-        min_start = 0
-        max_start = 0
-        count = 0
+    def countSubarrays(self, nums: List[int], mink: int, maxK: int) -> int:
 
-        for i, num in enumerate(nums):
-            if num < minK or num > maxK:
-                min_found = False
-                max_found = False
-                start = i + 1
-            if num == minK:
-                min_start = i
-                min_found = True
+        res = 0
+        bad_idx = left_idx = right_idx = -1
+
+        for i, num in enumerate(nums) :
+            if not mink <= num <= maxK:
+                bad_idx = i
+
+            if num == mink:
+                left_idx = i
+
             if num == maxK:
-                max_start = i
-                max_found = True
-            if min_found and max_found:
-                count += min(min_start, max_start) - start + 1
-        return count
+                right_idx = i
 
+            res += max(0, min(left_idx, right_idx) - bad_idx)
 
-solution = Solution()
-print(solution.countSubarrays(nums = [1,3,5,2,7,5], minK = 1, maxK = 5))
-print(solution.countSubarrays(nums = [1,1,1,1], minK = 1, maxK = 1))
+        return res
