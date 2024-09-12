@@ -42,16 +42,13 @@
 #        """
 
 class Solution:
-    def __init__(self):
-        self.total = 0
     def depthSum(self, nestedList: List[NestedInteger]) -> int:
-        self.dfs_helper(nestedList, 1)
-        return self.total
-
-    def dfs_helper(self, input, depth):
-        for i in input:
-            if i.isInteger():
-                self.total += i.getInteger() * depth
-            else:
-                self.dfs_helper(i.getList(), depth + 1)
-        
+        def dfs_helper(input, depth):
+            total = 0
+            for i in input:
+                if i.isInteger():
+                    total += i.getInteger()*depth
+                else:
+                    total += dfs_helper(i.getList(), depth+1)
+            return total
+        return dfs_helper(nestedList, 1)
