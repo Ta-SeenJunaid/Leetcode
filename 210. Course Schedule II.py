@@ -1,38 +1,34 @@
-from typing import List
-
-
 class Solution:
-    def __init__(self):
-        self.adj_list = None
-        self.result = []
-        self.visited = {}
-
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        self.adj_list = [[] for _ in range(numCourses)]
-        for u, v in prerequisites:
-            self.adj_list[u].append(v)
-        for i in range(numCourses):
-            if not self.dfs(i):
+        if prerequisites == []:
+            return list(range(numCourses))
+        adj_list = defaultdict(list)
+        for dest, src in prerequisites:
+            adj_list[src].append(dest)
+        visited = [0]*numCourses # 0: NOT_VISITED, -1: VISITING, 1: VISITED
+        is_cycle = False
+        topo_ans = []
+        def dfs(node):
+            nonlocal is_cycle
+            if is_cycle:
+                return
+            if visited[node] == -1:
+                is_cycle = True
+                return
+            if visited[node] == 1:
+                return
+            visited[node] = -1
+            if adj_list[node]:
+                for nei in adj_list[node]:
+                    dfs(nei)
+            topo_ans.append(node)
+            visited[node] = 1
+            return
+        for node in range(numCourses):
+            if is_cycle == True:
                 return []
-        return self.result
+            if visited[node] == 0:
+                dfs(node)
+        return topo_ans[::-1] if not is_cycle else []
 
-    def dfs(self, i):
-        if i in self.visited:
-            return self.visited[i]
-        self.visited[i] = False
-        for nei in self.adj_list[i]:
-            if not self.dfs(nei):
-                return False
-        self.visited[i] = True
-        self.result.append(i)
-        return True
-
-
-solution = Solution()
-print(solution.findOrder(numCourses = 2, prerequisites = [[1,0]]))
-
-solution = Solution()
-print(solution.findOrder(numCourses = 4, prerequisites = [[1,0],[2,0],[3,1],[3,2]]))
-
-solution = Solution()
-print(solution.findOrder(numCourses = 1, prerequisites = []))
+        
