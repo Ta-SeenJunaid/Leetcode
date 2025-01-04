@@ -17,13 +17,9 @@ class Solution:
             p_path[root.val] = root
             path(root.parent)
         path(p)
-        ans = None 
         def lca(root):
-            nonlocal ans
             if root.val in p_path:
-                ans = p_path[root.val]
-                return ans
-            lca(root.parent)
-        lca(q)
-        return ans
+                return p_path[root.val]
+            return lca(root.parent)
+        return lca(q)
         
