@@ -8,7 +8,6 @@ class Solution:
         for i in range(n):
             temp[score[i]] = i
         score_copy.sort(reverse=True)
-        print(score_copy, temp)
         ans = [""]*n
         for i in range(n):
             if i==0:
